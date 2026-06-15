@@ -9,11 +9,29 @@ il bascule en **mode API** ; sinon il fonctionne en local (localStorage).
 
 ---
 
+## Prérequis : Node.js ≥ 18
+
+Vérifiez si Node.js est installé :
+```bash
+node -v   # doit afficher v18.x ou v20.x
+```
+
+Si ce n'est pas le cas, téléchargez-le sur **[nodejs.org](https://nodejs.org/fr/download)** (version LTS recommandée).
+
+---
+
 ## Démarrage
 
+### Option automatique (Mac / Linux)
+```bash
+chmod +x setup.sh && ./setup.sh   # installe les deps + génère le .env
+npm start
+```
+
+### Option manuelle
 ```bash
 cd server
-cp .env.example .env        # puis éditez SESSION_SECRET
+cp .env.example .env        # éditez SESSION_SECRET
 npm install
 npm start                   # → http://localhost:4000
 ```

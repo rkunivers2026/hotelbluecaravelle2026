@@ -1,0 +1,31 @@
+# ─── Configuration serveur ───
+# Port d'écoute
+PORT=4000
+
+# Secret de signature des sessions (JWT). OBLIGATOIRE en production.
+# Générez-en un avec :  node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
+SESSION_SECRET=changez-moi-en-production-avec-une-chaine-aleatoire-longue
+
+# Durée de session (inactivité) en minutes — expiration glissante
+SESSION_TTL_MIN=30
+
+# ─── CORS ───
+# Origine autorisée du front si servi sur un domaine différent du backend.
+# Laissez vide si le front est servi par ce même serveur (server/public).
+# Exemple : https://bleucaravelle.pages.dev
+CORS_ORIGIN=
+
+# Cookies sécurisés (HTTPS). Mettre true en production derrière HTTPS.
+# Obligatoire à true si CORS_ORIGIN est défini (cookies cross-site).
+COOKIE_SECURE=false
+
+# ─── Super administrateur ───
+# Optionnel : provisionne automatiquement le super admin au premier démarrage.
+# Si laissé vide, le compte se crée via l'écran « Configuration initiale » du front
+# (POST /api/auth/setup) à la première connexion.
+SUPERADMIN_USER=
+SUPERADMIN_PASS=
+
+# ─── Données ───
+# Chemin du fichier de persistance (JSON). Relatif au dossier server/.
+DATA_FILE=data/store.json
