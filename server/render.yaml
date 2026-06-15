@@ -1,0 +1,38 @@
+# ───────────────────────────────────────────────
+# Bleu Caravelle — Render Blueprint (Infrastructure as Code)
+# Déploiement en 1 clic : https://render.com/docs/blueprint-spec
+#
+# Placez ce fichier à la RACINE de votre dépôt Git.
+# • Si le dossier server/ EST la racine du dépôt : laissez tel quel.
+# • Si server/ est un sous-dossier : décommentez la ligne « rootDir: server ».
+# ───────────────────────────────────────────────
+services:
+  - type: web
+    name: bleu-caravelle
+    runtime: node
+    region: frankfurt           # le plus proche de la Côte d'Ivoire
+    plan: starter               # disque persistant requis (pas dispo sur free)
+    # rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: SESSION_SECRET     # secret JWT — généré automatiquement par Render
+        generateValue: true
+      - key: COOKIE_SECURE      # HTTPS en production
+        value: "true"
+      - key: SESSION_TTL_MIN    # expiration de session (inactivité)
+        value: "30"
+      - key: DATA_FILE          # base persistée sur le disque monté
+        value: /var/data/store.json
+      # Optionnel — provisionner le super admin au 1er démarrage.
+      # Sinon, il se crée via l'écran « Configuration initiale » du site.
+      # - key: SUPERADMIN_USER
+      #   sync: false
+      # - key: SUPERADMIN_PASS
+      #   sync: false
+    disk:
+      name: bleu-data
+      mountPath: /var/data      # doit correspondre au dossier de DATA_FILE
+      sizeGB: 1

@@ -1,0 +1,23 @@
+# ───────────────────────────────────────────────
+# Bleu Caravelle — Docker Compose (VPS / serveur dédié)
+#   docker compose up -d --build
+# ───────────────────────────────────────────────
+services:
+  bleu-caravelle:
+    build: .
+    container_name: bleu-caravelle
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      # ⚠️ Générez un secret fort :
+      #   node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
+      SESSION_SECRET: "REMPLACEZ_PAR_UN_SECRET_ALEATOIRE_LONG"
+      COOKIE_SECURE: "true"        # mettez "false" si vous testez en HTTP local
+      SESSION_TTL_MIN: "30"
+      DATA_FILE: "/app/data/store.json"
+    volumes:
+      - bleu-data:/app/data        # persiste la base entre les redémarrages
+
+volumes:
+  bleu-data:
